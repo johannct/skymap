@@ -22,7 +22,7 @@
 
 from .baseSkyMap import BaseSkyMap
 
-__all__ = ["CachingSkyMap"]
+__all__ = ["CachingSkyMap", ]
 
 
 class CachingSkyMap(BaseSkyMap):

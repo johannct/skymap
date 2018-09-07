@@ -27,11 +27,12 @@ import lsst.afw.geom as afwGeom
 from .cachingSkyMap import CachingSkyMap
 from .tractInfo import ExplicitTractInfo
 
-__all__ = ["DiscreteSkyMap"]
+__all__ = ["DiscreteSkyMap", ]
 
 
 class DiscreteSkyMapConfig(CachingSkyMap.ConfigClass):
     """Configuration for the DiscreteSkyMap"""
+
     raList = ListField(dtype=float, default=[], doc="Right Ascensions of tracts (ICRS, degrees)")
     decList = ListField(dtype=float, default=[], doc="Declinations of tracts (ICRS, degrees)")
     radiusList = ListField(dtype=float, default=[], doc="Radii of tracts (degrees)")
@@ -50,16 +51,18 @@ class DiscreteSkyMap(CachingSkyMap):
     """Discrete sky map pixelization.
 
     We put a square Tract at each of the nominated coordinates.
+
+    Parameters
+    ----------
+    config :
+        an instance of self.ConfigClass; if None the default config is used
+    version :
+        software version of this class, to retain compatibility with old instances
     """
     ConfigClass = DiscreteSkyMapConfig
     _version = (1, 0)  # for pickle
 
     def __init__(self, config, version=0):
-        """Constructor
-
-        @param[in] config: an instance of self.ConfigClass; if None the default config is used
-        @param[in] version: software version of this class, to retain compatibility with old instances
-        """
         numTracts = len(config.radiusList)
         super(DiscreteSkyMap, self).__init__(numTracts, config, version)
 

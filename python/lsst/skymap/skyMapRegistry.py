@@ -26,7 +26,7 @@ from .discreteSkyMap import DiscreteSkyMap
 from .ringsSkyMap import RingsSkyMap
 from .healpixSkyMap import HealpixSkyMap
 
-__all__ = ["skyMapRegistry"]
+__all__ = ["skyMapRegistry", ]
 
 skyMapRegistry = makeRegistry(
     """A registry of sky maps

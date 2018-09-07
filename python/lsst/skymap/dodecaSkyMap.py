@@ -3,7 +3,8 @@
 # Copyright 2008, 2009, 2010 LSST Corporation.
 #
 # This product includes software developed by the
-# LSST Project (http://www.lsst.org/).
+# LSST Project (http://www.lsst.org/) .
+#
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,9 +20,10 @@
 # the GNU General Public License along with this program.  If not,
 # see <http://www.lsstcorp.org/LegalNotices/>.
 #
+
+
 """
-@todo
-- Consider tweaking pixel scale so the average scale is as specified, rather than the scale at the center
+Consider tweaking pixel scale so the average scale is as specified, rather than the scale at the center
 """
 import struct
 
@@ -31,7 +33,7 @@ from . import detail
 from .baseSkyMap import BaseSkyMap
 from .tractInfo import TractInfo
 
-__all__ = ['DodecaSkyMapConfig', 'DodecaSkyMap']
+__all__ = ['DodecaSkyMapConfig', 'DodecaSkyMap', ]
 
 
 class DodecaSkyMapConfig(BaseSkyMap.ConfigClass):
@@ -60,7 +62,10 @@ class DodecaSkyMap(BaseSkyMap):
     def __init__(self, config=None):
         """Construct a DodecaSkyMap
 
-        @param[in] config: an instance of self.ConfigClass; if None the default config is used
+        Parameters
+        ----------
+        config :
+            an instance of self.ConfigClass; if None the default config is used
         """
         BaseSkyMap.__init__(self, config)
         self._dodecahedron = detail.Dodecahedron(withFacesOnPoles=self.config.withTractsOnPoles)
@@ -91,9 +96,12 @@ class DodecaSkyMap(BaseSkyMap):
     def __getstate__(self):
         """Support pickle
 
-        @return a dict containing:
-        - version: a pair of ints
-        - config: the config
+        Returns
+        -------
+        result : `dict`
+            a dict containing:
+            - version: a pair of ints
+            - config: the config
         """
         return dict(
             version=self._version,
@@ -103,9 +111,11 @@ class DodecaSkyMap(BaseSkyMap):
     def __setstate__(self, stateDict):
         """Support unpickle
 
-        @param[in] stateDict: a dict containing:
-        - version: a pair of ints
-        - config: the config
+        Parameters
+        ----------
+        stateDict : `dict`
+            - version: a pair of ints
+            - config: the config
         """
         version = stateDict["version"]
         if version >= (2, 0):
@@ -115,24 +125,39 @@ class DodecaSkyMap(BaseSkyMap):
     def findTract(self, coord):
         """Find the tract whose inner region includes the coord.
 
-        @param[in] coord: ICRS sky coordinate (lsst.afw.geom.SpherePoint)
-        @return TractInfo for tract whose inner region includes the coord.
+        Parameters
+        ----------
+        coord :
+            ICRS sky coordinate (lsst.afw.geom.SpherePoint)
 
-        @note This routine will be more efficient if coord is ICRS.
+        Returns
+        -------
+        result : `callable`
+            TractInfo for tract whose inner region includes the coord.
+
+        Notes
+        -----
+        This routine will be more efficient if coord is ICRS.
         """
         return self[self._dodecahedron.getFaceInd(coord.getVector())]
 
     def getVersion(self):
         """Return version (e.g. for pickle)
 
-        @return version as a pair of integers
+        Returns
+        -------
+        result : `callable`
+            version as a pair of integers
         """
         return self._version
 
     def getWithTractsOnPoles(self):
         """Return withTractsOnPoles parameter
 
-        @return withTractsOnPoles as a bool
+        Returns
+        -------
+        result : `callable`
+            withTractsOnPoles as a bool
         """
         return self._dodecahedron.getWithFacesOnPoles()
 

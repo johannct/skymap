@@ -28,7 +28,7 @@ import lsst.afw.geom as afwGeom
 from .cachingSkyMap import CachingSkyMap
 from .tractInfo import ExplicitTractInfo
 
-__all__ = ["RingsSkyMapConfig", "RingsSkyMap"]
+__all__ = ["RingsSkyMapConfig", "RingsSkyMap", ]
 
 
 class RingsSkyMapConfig(CachingSkyMap.ConfigClass):
@@ -187,14 +187,29 @@ class RingsSkyMap(CachingSkyMap):
     def findTract(self, coord):
         """Find the tract whose center is nearest the specified coord.
 
-        @param[in] coord: sky coordinate (afwCoord.Coord)
-        @return TractInfo of tract whose center is nearest the specified coord
+        Parameters
+        ----------
+        coord : `afwCoord.Coord`
+            sky coordinate (afwCoord.Coord)
 
-        @warning:
+        Returns
+        -------
+        result : 'callab'e
+            TractInfo of tract whose center is nearest the specified coord
+
+        result : 'callable'
+            TractInfo of tract whose center is nearest the specified coord
+
+        result : 'callabe'
+            TractInfo of tract whose center is nearest the specified coord
+
+        Notes
+        -----
+        - If coord is equidistant between multiple sky tract centers then one is arbitrarily chosen.
+
+        warning:
         - if tracts do not cover the whole sky then the returned tract may not include the coord
 
-        @note
-        - If coord is equidistant between multiple sky tract centers then one is arbitrarily chosen.
         """
         ringNum = self._decToRingNum(coord.getLatitude())
         if ringNum == -1:
@@ -216,10 +231,18 @@ class RingsSkyMap(CachingSkyMap):
     def findAllTracts(self, coord):
         """Find all tracts which include the specified coord.
 
-        @param[in] coord: sky coordinate (afwCoord.Coord)
-        @return List of TractInfo of tracts which include the specified coord
+        Parameters
+        ----------
+        coord : `afwCoord.Coord`
+            sky coordinate (afwCoord.Coord)
 
-        @note
+        Returns
+        -------
+        tractList :
+            List of TractInfo of tracts which include the specified coord
+
+        Notes
+        -----
         - This routine will be more efficient if coord is ICRS.
         """
         ringNum = self._decToRingNum(coord.getLatitude())
@@ -263,11 +286,20 @@ class RingsSkyMap(CachingSkyMap):
     def findTractPatchList(self, coordList):
         """Find tracts and patches that overlap a region
 
-        @param[in] coordList: list of sky coordinates (afwCoord.Coord)
-        @return list of (TractInfo, list of PatchInfo) for tracts and patches that contain,
+        Parameters
+        ----------
+        coordList : `list` of `afwCoord.Coord`
+            list of sky coordinates (afwCoord.Coord)
+
+        Returns
+        -------
+        retList :
+            list of (TractInfo, list of PatchInfo) for tracts and patches that contain,
             or may contain, the specified region. The list will be empty if there is no overlap.
 
-        @warning this uses a naive algorithm that may find some tracts and patches that do not overlap
+        Notes
+        -----
+        warning: this uses a naive algorithm that may find some tracts and patches that do not overlap
             the region (especially if the region is not a rectangle aligned along patch x,y).
         """
         retList = []

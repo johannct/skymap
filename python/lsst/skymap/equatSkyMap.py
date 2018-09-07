@@ -26,7 +26,7 @@ import lsst.afw.geom as afwGeom
 from .baseSkyMap import BaseSkyMap
 from .tractInfo import TractInfo
 
-__all__ = ['EquatSkyMapConfig', 'EquatSkyMap']
+__all__ = ['EquatSkyMapConfig', 'EquatSkyMap', ]
 
 
 class EquatSkyMapConfig(BaseSkyMap.ConfigClass):
@@ -57,7 +57,10 @@ class EquatSkyMap(BaseSkyMap):
     def __init__(self, config=None):
         """Construct a EquatSkyMap
 
-        @param[in] config: an instance of self.ConfigClass; if None the default config is used
+        Parameters
+        ----------
+        config :
+            an instance of self.ConfigClass; if None the default config is used
         """
         BaseSkyMap.__init__(self, config)
 
@@ -98,9 +101,12 @@ class EquatSkyMap(BaseSkyMap):
     def __getstate__(self):
         """Support pickle
 
-        @return a dict containing:
-        - version: a pair of ints
-        - config: the config
+        Returns
+        -------
+        result : `dict`
+            a dict containing:
+            - version: a pair of ints
+            - config: the config
         """
         return dict(
             version=self._version,
@@ -110,9 +116,12 @@ class EquatSkyMap(BaseSkyMap):
     def __setstate__(self, stateDict):
         """Support unpickle
 
-        @param[in] stateDict: a dict containing:
-        - version: a pair of ints
-        - config: the config
+        Parameters
+        ----------
+        stateDict : `dict`
+            a dict containing:
+            - version: a pair of ints
+            - config: the config
         """
         version = stateDict["version"]
         if version >= (2, 0):
@@ -122,7 +131,10 @@ class EquatSkyMap(BaseSkyMap):
     def getVersion(self):
         """Return version (e.g. for pickle)
 
-        @return version as a pair of integers
+        Returns
+        -------
+        result : `self._version`
+            version as a pair of integers
         """
         return self._version
 
