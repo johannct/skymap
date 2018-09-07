@@ -27,11 +27,12 @@ import lsst.afw.geom as afwGeom
 from .cachingSkyMap import CachingSkyMap
 from .tractInfo import ExplicitTractInfo
 
-__all__ = ["DiscreteSkyMap"]
+__all__ = ["DiscreteSkyMap", ]
 
 
 class DiscreteSkyMapConfig(CachingSkyMap.ConfigClass):
     """Configuration for the DiscreteSkyMap"""
+
     raList = ListField(dtype=float, default=[], doc="Right Ascensions of tracts (ICRS, degrees)")
     decList = ListField(dtype=float, default=[], doc="Declinations of tracts (ICRS, degrees)")
     radiusList = ListField(dtype=float, default=[], doc="Radii of tracts (degrees)")

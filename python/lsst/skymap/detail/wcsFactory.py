@@ -21,6 +21,8 @@
 #
 import lsst.afw.geom as afwGeom
 
+__all__ = ('WcsFactory', )
+
 
 class WcsFactory:
     """A factory for creating Wcs objects for the sky tiles.
@@ -29,12 +31,18 @@ class WcsFactory:
     def __init__(self, pixelScale, projection, rotation=0*afwGeom.radians, flipX=False):
         """Make a WcsFactory
 
-        @param[in] pixelScale: desired scale, as sky/pixel, an afwGeom.Angle
-        @param[in] projection: FITS-standard 3-letter name of projection, e.g.:
+        Parameters
+        ----------
+        pixelScale :
+            desired scale, as sky/pixel, an afwGeom.Angle
+        projection :
+            FITS-standard 3-letter name of projection, e.g.:
             TAN (tangent), STG (stereographic), MOL (Mollweide's), AIT (Hammer-Aitoff)
             see Representations of celestial coordinates in FITS (Calabretta and Greisen, 2002)
-        @param[in] rotation:   Rotation relative to cardinal, as an lsst.afw.geom.Angle
-        @param[in] flipX: Flip the X axis?
+        rotation :
+            Rotation relative to cardinal, as an lsst.afw.geom.Angle
+        flipX :
+            Flip the X axis?
         """
         if len(projection) != 3:
             raise RuntimeError("projection=%r; must have length 3" % (projection,))
@@ -44,8 +52,16 @@ class WcsFactory:
     def makeWcs(self, crPixPos, crValCoord):
         """Make a Wcs
 
-        @param[in] crPixPos: crPix for WCS, using the LSST standard; an afwGeom.Point2D or pair of floats
-        @param[in] crValCoord: ICRS crVal for WCS (lsst.afw.geom.SpherePoint)
+        Parameters
+        ----------
+        crPixPos :
+            crPix for WCS, using the LSST standard; an afwGeom.Point2D or pair of floats
+        crValCoord :
+            ICRS crVal for WCS (lsst.afw.geom.SpherePoint)
+
+        Returns
+        -------
+        results : `afwGeom.makeSkyWcs`
         """
         return afwGeom.makeSkyWcs(crpix=crPixPos, crval=crValCoord,
                                   cdMatrix=self._cdMatrix, projection=self._projection)

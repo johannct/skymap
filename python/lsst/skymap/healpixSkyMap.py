@@ -94,8 +94,12 @@ class HealpixSkyMap(CachingSkyMap):
     def __init__(self, config, version=0):
         """Constructor
 
-        @param[in] config: an instance of self.ConfigClass; if None the default config is used
-        @param[in] version: software version of this class, to retain compatibility with old instances
+        Parameters
+        ----------
+        config :
+            an instance of self.ConfigClass; if None the default config is used
+        version :
+            software version of this class, to retain compatibility with old instances
         """
         self._nside = 1 << config.log2NSide
         numTracts = healpy.nside2npix(self._nside)

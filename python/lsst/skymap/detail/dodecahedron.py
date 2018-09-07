@@ -2,6 +2,8 @@
 import math
 import numpy
 
+__all__ = ('Dodecahedron', )
+
 
 class Dodecahedron:
     """A dodecahedron
@@ -10,9 +12,12 @@ class Dodecahedron:
     """
 
     def __init__(self, withFacesOnPoles=False):
-        """Construct a Dodecahedron
+        """Construct a Dodecahedron_
 
-        @param[in] withFacesOnPoles: if True center a face on each pole, else put a vertex on each pole
+        Parameters
+        ----------
+
+        withFacesOnPoles: if True center a face on each pole, else put a vertex on each pole
         """
         self._withFacesOnPoles = bool(withFacesOnPoles)
 
@@ -44,23 +49,38 @@ class Dodecahedron:
     def getFaceCtrList(self):
         """Return a list of face centers
 
-        @return a list of face centers (in index order); each a unit vector (numpy array)
+        Returns
+        -------
+        results : `self.faceVecList[:]`
+            a list of face centers (in index order); each a unit vector (numpy array)
         """
         return self.faceVecList[:]
 
     def getFaceCtr(self, ind):
         """Return the center of the specified face
 
-        @param[in] ind: face index
-        @return face center as a unit vector (numpy array)
+        Parameters
+        ----------
+        ind : `face index`
+
+        Returns
+        -------
+        results : `self.faceVecList[ind][:]`
+            face center as a unit vector (numpy array)
         """
         return self.faceVecList[ind][:]
 
     def getVertices(self, ind):
         """Return the vertices for a given face
 
-        @param[in] ind: face index
-        @return a list of vertices, each a unit vector (numpy array)
+        Parameters
+        ----------
+        ind : `face index`
+
+        Returns
+        -------
+        sortedVertexList :
+            a list of vertices, each a unit vector (numpy array)
         """
         faceVec = self.getFaceCtr(ind)
         vertexList, indList = _findCloseList(self.vertexVecList, faceVec)
@@ -77,8 +97,15 @@ class Dodecahedron:
     def getFaceInd(self, vec):
         """Return the index of the face containing the cartesian vector
 
-        @param[in] vec: cartesian vector (length is ignored)
-        @return index of face containing vec
+        Parameters
+        ----------
+        vec :
+            cartesian vector (length is ignored)
+
+        Returns
+        -------
+        results : `numpy.argmax()`
+            index of face containing vec
         """
         return numpy.argmax(numpy.dot(self.faceVecList, vec))
 
@@ -91,9 +118,12 @@ class Dodecahedron:
 def computeRotationMatrix(angle, axis):
     """Return a 3D rotation matrix for rotation by a specified amount around a specified axis
 
-    Inputs:
-    - angle: amount of rotation (rad)
-    - axis: axis of rotation; one of 0, 1 or 2 for x, y or z
+    Parameters
+    ----------
+    angle : `float`
+        amount of rotation (rad)
+    axis : `int`
+        axis of rotation; one of 0, 1 or 2 for x, y or z
     """
     cosAng = math.cos(angle)
     sinAng = math.sin(angle)
@@ -109,10 +139,14 @@ def computeRotationMatrix(angle, axis):
 def _computeCoordTransform(vec0, vec1, vec1NegativeX=False):
     """Compute a rotation matrix that puts vec0 along z and vec1 along +x in the xz plane
 
-    Inputs:
-    - vec0: vector 0
-    - vec1: vector 1
-    - vec1NegativeX: if True then vec1 is rotated to face negative x
+    Parameters
+    ----------
+    vec0 :
+        vector 0
+    vec1 :
+        vector 1
+    vec1NegativeX :
+        if True then vec1 is rotated to face negative x
     """
     # rotate around x by angle of vec0 from z to y
     xAng = math.atan2(vec0[1], vec0[2])
@@ -191,9 +225,12 @@ def _findCloseIndexSet(vecList, ind):
 
     This is intended for regular grids where distances are quantized
 
-    Inputs:
-    - vecList: list of cartesian vectors
-    - ind: index of vector to be nearest
+    Parameters
+    ----------
+    vecList :
+        list of cartesian vectors
+    ind :
+        index of vector to be nearest
     """
     dotProductList = numpy.round(numpy.dot(vecList, vecList[ind]), 2)
     dotProductList[ind] = -9e99
@@ -207,13 +244,18 @@ def _findCloseList(vecList, vec):
 
     This is intended for regular grids where distances are quantized
 
-    Inputs:
-    - vecList: list of cartesian vectors
-    - vec: vector to be near
+    Parameters
+    ----------
+    vecList : `list`
+        list of cartesian vectors
+    vec :
+        vector to be near
 
-    @return two items:
-    - list of closest vectors
-    - list if indices of those vectors
+    Returns
+    retList : `list`
+        list of closest vectors
+    indList : `list`
+        list if indices of those vectors
     """
     dotProductList = numpy.round(numpy.dot(vecList, vec), 2)
     minDist = numpy.max(dotProductList)
@@ -225,9 +267,12 @@ def _findCloseList(vecList, vec):
 def _findClosePair(vecList, ind=0):
     """Given a list of cartesian vectors and an index, return the vector and one of its closest neighbors
 
-    Inputs:
-    - vecList: list of cartesian vectors
-    - ind: index of first vector
+    Parameters
+    ----------
+    vecList :
+        list of cartesian vectors
+    ind :
+        index of first vector
     """
     vec = vecList[ind]
     otherVecList = vecList[0:ind] + vecList[ind+1:]

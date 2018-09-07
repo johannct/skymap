@@ -32,11 +32,18 @@ _TinyFloat = numpy.finfo(float).tiny
 def coordFromVec(vec, defRA=None):
     """Convert an ICRS cartesian vector to an ICRS lsst.afw.geom.SpherePoint
 
-    @param[in] vec: an ICRS catesian vector as a sequence of three floats
-    @param[in] defRA: the RA to use if the vector is too near a pole (an afwGeom Angle);
-                ignored if not near a pole
+    Parameters
+    ----------
+    vec :
+        an ICRS catesian vector as a sequence of three floats
+    defRA :
+        the RA to use if the vector is too near a pole (an afwGeom Angle);
+        ignored if not near a pole
 
-    @throw RuntimeError if vec too near a pole and defRA is None
+    Raises
+    ------
+    RuntimeError
+        if vec too near a pole and defRA is None
     """
     if abs(vec[0]) < _TinyFloat and abs(vec[1]) < _TinyFloat:
         if defRA is None:

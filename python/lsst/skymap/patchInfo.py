@@ -23,7 +23,7 @@
 from lsst.sphgeom import ConvexPolygon
 from lsst.afw.geom import Box2D
 
-__all__ = ["PatchInfo", "makeSkyPolygonFromBBox"]
+__all__ = ["PatchInfo", "makeSkyPolygonFromBBox", ]
 
 
 def makeSkyPolygonFromBBox(bbox, wcs):
@@ -55,9 +55,14 @@ class PatchInfo:
     def __init__(self, index, innerBBox, outerBBox):
         """Construct a PatchInfo
 
-        @param[in] index: x,y index of patch (a pair of ints)
-        @param[in] innerBBox: inner bounding box (an afwGeom.Box2I)
-        @param[in] outerBBox: inner bounding box (an afwGeom.Box2I)
+        Parameters
+        ----------
+        index :
+            x,y index of patch (a pair of ints)
+        innerBBox :
+            inner bounding box (an afwGeom.Box2I)
+        outerBBox :
+            inner bounding box (an afwGeom.Box2I)
         """
         self._index = index
         self._innerBBox = innerBBox
@@ -67,26 +72,47 @@ class PatchInfo:
 
     def getIndex(self):
         """Return patch index: a tuple of (x, y)
+
+        Returns
+        -------
+        result : `callable`
+            patch index: a tuple of (x, y)
         """
         return self._index
 
     def getInnerBBox(self):
         """Get inner bounding box
+
+        Returns
+        -------
+        result : `callable`
         """
         return self._innerBBox
 
     def getOuterBBox(self):
         """Get outer bounding box
+
+        Returns
+        -------
+        result : `callable`
         """
         return self._outerBBox
 
     def getInnerSkyPolygon(self, tractWcs):
         """Get the inner on-sky region as an sphgeom.ConvexPolygon.
+
+        Returns
+        -------
+        result : `callable`
         """
         return makeSkyPolygonFromBBox(bbox=self.getInnerBBox(), wcs=tractWcs)
 
     def getOuterSkyPolygon(self, tractWcs):
         """Get the outer on-sky region as a sphgeom.ConvexPolygon.
+
+        Returns
+        -------
+        result : `callable`
         """
         return makeSkyPolygonFromBBox(bbox=self.getOuterBBox(), wcs=tractWcs)
 
@@ -99,16 +125,28 @@ class PatchInfo:
 
     def __ne__(self, rhs):
         """Support !=
+
+        Returns
+        -------
+        result : 'callable'
         """
         return not self.__eq__(rhs)
 
     def __str__(self):
         """Return a brief string representation
+
+        Returns
+        -------
+        result : 'callabe'
         """
         return "PatchInfo(index=%s)" % (self.getIndex(),)
 
     def __repr__(self):
         """Return a detailed string representation
+
+        Returns
+        -------
+        result : 'callable'
         """
         return "PatchInfo(index=%s, innerBBox=%s, outerBBox=%s)" % \
             (self.getIndex(), self.getInnerBBox(), self.getOuterBBox())
