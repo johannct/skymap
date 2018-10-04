@@ -6,8 +6,12 @@
 skymap
 ##########
 
+<<<<<<< HEAD
 .. The skymap package provides tools for creating pixelizations of the sky 
     to define tracts and patches for imaging data.
+=======
+.. Sentence/short paragraph describing what the package is for.
+>>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
 
 The ``skymap`` package
 
