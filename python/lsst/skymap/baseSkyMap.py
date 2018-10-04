@@ -1,4 +1,3 @@
-#
 # LSST Data Management System
 # Copyright 2008, 2009, 2010 LSST Corporation.
 #
@@ -80,13 +79,8 @@ class BaseSkyMap:
     Notes
     -----
     BaseSkyMap is an abstract base class. Subclasses must do the following:
-<<<<<<< HEAD
     define ``__init__`` and have it construct the TractInfo objects and put them in ``__tractInfoList__``
     define ``__getstate__`` and ``__setstate__`` to allow pickling (the butler saves sky maps using pickle);
-=======
-    define init and have it construct the TractInfo objects and put them in tractInfoList
-    define getstate and setstate to allow pickling (the butler saves sky maps using pickle);
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
     see DodecaSkyMap for an example of how to do this. (Most of that code could be moved
     into this base class, but that would make it harder to handle older versions of pickle data.)
     define updateSha1 to add any subclass-specific state to the hash.
@@ -103,13 +97,8 @@ class BaseSkyMap:
 
         Parameters
         ----------
-<<<<<<< HEAD
         config : `BaseSkyMapConfig` or None
             The configuration for this SkyMap; if None the default config is used.
-=======
-        config :
-            an instance of self.ConfigClass; if None the default config is used
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
         """
         if config is None:
             config = self.ConfigClass()
@@ -129,7 +118,6 @@ class BaseSkyMap:
         Parameters
         ----------
         coord : `lsst.afw.geom.SpherePoint`
-<<<<<<< HEAD
             ICRS sky coordinate
 
         Returns
@@ -146,23 +134,6 @@ class BaseSkyMap:
         **warning:**
             - if tracts do not cover the whole sky then the returned tract may not include the coord
 
-=======
-            ICRS sky coordinate (lsst.afw.geom.SpherePoint)
-
-        Returns
-        -------
-        result : `distTractInfoList`
-            TractInfo of tract whose center is nearest the specified coord
-
-        Notes
-        -----
-        warning:
-            - if tracts do not cover the whole sky then the returned tract may not include the coord
-            - This routine will be more efficient if coord is ICRS.
-            - If coord is equidistant between multiple sky tract centers then one is arbitrarily chosen.
-            - The default implementation is not very efficient; subclasses may wish to override.
-
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
         """
         distTractInfoList = []
         for i, tractInfo in enumerate(self):
@@ -178,31 +149,18 @@ class BaseSkyMap:
         Parameters
         ----------
         coordList : `lsst.afw.geom.SpherePoint`
-<<<<<<< HEAD
             list of ICRS sky coordinates
 
         Returns
         -------
         reList : `list` of `TractInfo` or `PatchInfo`
             for tracts and patches that contain,
-=======
-            list of ICRS sky coordinates (lsst.afw.geom.SpherePoint)
-
-        Returns
-        -------
-        reList : `list`
-            list of (TractInfo, list of PatchInfo) for tracts and patches that contain,
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
             or may contain, the specified region. The list will be empty if there is no overlap.
 
         Notes
         -----
-<<<<<<< HEAD
         **warning:**
             this uses a naive algorithm that may find some tracts and patches that do not overlap
-=======
-        warning: this uses a naive algorithm that may find some tracts and patches that do not overlap
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
             the region (especially if the region is not a rectangle aligned along patch x,y).
         """
         retList = []
@@ -218,11 +176,7 @@ class BaseSkyMap:
         Parameters
         ----------
         coordList : `lsst.afw.geom.SpherePoint`
-<<<<<<< HEAD
             list of ICRS sky coordinates
-=======
-            list of ICRS sky coordinates (lsst.afw.geom.SpherePoint)
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
 
         Returns
         -------
@@ -317,13 +271,9 @@ class BaseSkyMap:
             registry.addDataUnitEntry(
                 "Tract",
                 {"skymap": name, "tract": tractInfo.getId(),
-<<<<<<< HEAD
                  "region": region,
                  "ra": centroid.getRa().asDegrees(),
                  "dec": centroid.getDec().asDegrees()}
-=======
-                    "region": tractInfo.getOuterSkyPolygon()}
->>>>>>> a5fcfbaab9d68ebd0f1d307686ef17586be5702d
             )
             for patchInfo in tractInfo:
                 cellX, cellY = patchInfo.getIndex()
