@@ -12,12 +12,12 @@ class Dodecahedron:
     """
 
     def __init__(self, withFacesOnPoles=False):
-        """Construct a Dodecahedron_
+        """Construct a Dodecahedron
 
         Parameters
         ----------
-
-        withFacesOnPoles: if True center a face on each pole, else put a vertex on each pole
+        withFacesOnPoles :
+        if True center a face on each pole, else put a vertex on each pole
         """
         self._withFacesOnPoles = bool(withFacesOnPoles)
 
@@ -51,7 +51,7 @@ class Dodecahedron:
 
         Returns
         -------
-        results : `self.faceVecList[:]`
+        results : callable
             a list of face centers (in index order); each a unit vector (numpy array)
         """
         return self.faceVecList[:]
@@ -75,7 +75,8 @@ class Dodecahedron:
 
         Parameters
         ----------
-        ind : `face index`
+        ind : `int`
+            face index
 
         Returns
         -------

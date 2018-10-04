@@ -75,13 +75,13 @@ class BaseSkyMapConfig(pexConfig.Config):
 class BaseSkyMap:
     """A collection of overlapping Tracts that map part or all of the sky.
 
-    Se*e TractInfo for more information.
+    See TractInfo for more information.
 
     Notes
     -----
     BaseSkyMap is an abstract base class. Subclasses must do the following:
-    define init and have it construct the TractInfo objects and put them in tractInfoList
-    define getstate and setstate to allow pickling (the butler saves sky maps using pickle);
+    define ``__init__`` and have it construct the TractInfo objects and put them in ``__tractInfoList__``
+    define ``__getstate__`` and ``__setstate__`` to allow pickling (the butler saves sky maps using pickle);
     see DodecaSkyMap for an example of how to do this. (Most of that code could be moved
     into this base class, but that would make it harder to handle older versions of pickle data.)
     define updateSha1 to add any subclass-specific state to the hash.
@@ -98,8 +98,8 @@ class BaseSkyMap:
 
         Parameters
         ----------
-        config :
-            an instance of self.ConfigClass; if None the default config is used
+        config : `BaseSkyMapConfig` or None
+            The configuration for this SkyMap; if None the default config is used.
         """
         if config is None:
             config = self.ConfigClass()
@@ -119,7 +119,7 @@ class BaseSkyMap:
         Parameters
         ----------
         coord : `lsst.afw.geom.SpherePoint`
-            ICRS sky coordinate (lsst.afw.geom.SpherePoint)
+            ICRS sky coordinate
 
         Returns
         -------
@@ -128,11 +128,12 @@ class BaseSkyMap:
 
         Notes
         -----
-        warning:
+        - This routine will be more efficient if coord is ICRS.
+        - If coord is equidistant between multiple sky tract centers then one is arbitrarily chosen.
+        - The default implementation is not very efficient; subclasses may wish to override.
+
+        **warning:**
             - if tracts do not cover the whole sky then the returned tract may not include the coord
-            - This routine will be more efficient if coord is ICRS.
-            - If coord is equidistant between multiple sky tract centers then one is arbitrarily chosen.
-            - The default implementation is not very efficient; subclasses may wish to override.
 
         """
         distTractInfoList = []
@@ -149,17 +150,18 @@ class BaseSkyMap:
         Parameters
         ----------
         coordList : `lsst.afw.geom.SpherePoint`
-            list of ICRS sky coordinates (lsst.afw.geom.SpherePoint)
+            list of ICRS sky coordinates
 
         Returns
         -------
-        reList : `list`
-            list of (TractInfo, list of PatchInfo) for tracts and patches that contain,
+        reList : `list` of `TractInfo` or `PatchInfo`
+            for tracts and patches that contain,
             or may contain, the specified region. The list will be empty if there is no overlap.
 
         Notes
         -----
-        warning: this uses a naive algorithm that may find some tracts and patches that do not overlap
+        **warning:**
+            this uses a naive algorithm that may find some tracts and patches that do not overlap
             the region (especially if the region is not a rectangle aligned along patch x,y).
         """
         retList = []
@@ -175,7 +177,7 @@ class BaseSkyMap:
         Parameters
         ----------
         coordList : `lsst.afw.geom.SpherePoint`
-            list of ICRS sky coordinates (lsst.afw.geom.SpherePoint)
+            list of ICRS sky coordinates
 
         Returns
         -------

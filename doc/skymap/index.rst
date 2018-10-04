@@ -6,7 +6,8 @@
 skymap
 ##########
 
-.. Sentence/short paragraph describing what the package is for.
+.. The skymap package provides tools for creating pixelizations of the sky 
+    to define tracts and patches for imaging data.
 
 The ``skymap`` package
 
